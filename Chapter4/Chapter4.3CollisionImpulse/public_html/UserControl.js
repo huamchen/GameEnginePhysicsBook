@@ -131,7 +131,7 @@ function userControl(event) {
         var i;
         for (i = 0; i < gEngine.Core.mAllObjects.length; i++) {
             if (gEngine.Core.mAllObjects[i].mInvMass !== 0) {
-                gEngine.Core.mAllObjects[i].mVelocity = new Vec2(Math.random() * 20 - 10, Math.random() * 20 - 10);
+                gEngine.Core.mAllObjects[i].mVelocity = new Vec2(Math.random() * 500 - 250, Math.random() * 500 - 250);
             }
         }
     }

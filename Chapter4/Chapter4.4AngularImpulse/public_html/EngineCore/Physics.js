@@ -38,8 +38,7 @@ gEngine.Physics = (function () {
         }
 
         var n = collisionInfo.getNormal();
-        
-        
+
         //the direction of collisionInfo is always from s1 to s2
         //but the Mass is inversed, so start scale with s2 and end scale with s1
         var start = collisionInfo.mStart.scale(s2.mInvMass / (s1.mInvMass + s2.mInvMass));
@@ -67,40 +66,33 @@ gEngine.Physics = (function () {
         var newFriction = Math.min(s1.mFriction, s2.mFriction);
 
         //R cross N
-        var RcrossN1 = r1.cross(n);
-        var RcrossN2 = r2.cross(n);
+        var R1crossN = r1.cross(n);
+        var R2crossN = r2.cross(n);
 
         // Calc impulse scalar
         // the formula of j can be found in http://www.myphysicslab.com/collision.html
         var j = -(1 + newRestituion) * rVelocityInNormal;
-        j = j / (s1.mInvMass + s2.mInvMass + RcrossN1 * RcrossN1 * s1.mInertia + RcrossN2 * RcrossN2 * s2.mInertia);
+        j = j / (s1.mInvMass + s2.mInvMass + R1crossN * R1crossN * s1.mInertia + R2crossN * R2crossN * s2.mInertia);
 
         //impulse is in direction of normal ( from s1 to s2)
         var impulse = n.scale(j);
 
-        //impulse = F dt = m * △v
-        //△v = impulse / m
         s1.mVelocity = s1.mVelocity.subtract(impulse.scale(s1.mInvMass));
         s2.mVelocity = s2.mVelocity.add(impulse.scale(s2.mInvMass));
 
-        //torque = R cross F = mAngularAcceleration * Inertia
-        // (R cross F) dt = (mAngularAcceleration * Inertia) dt
-        // R cross Inpulse = △mAngularVelocity * Inertia
-        // Inpulse = j * N
-        // △mAngularVelocity=R cross N * j / Inertia;
-        s1.mAngularVelocity -= RcrossN1 * j * s1.mInertia;
-        s2.mAngularVelocity += RcrossN2 * j * s2.mInertia;
+        s1.mAngularVelocity -= R1crossN * j * s1.mInertia;
+        s2.mAngularVelocity += R2crossN * j * s2.mInertia;
 
         var tangent = relativeVelocity.subtract(n.scale(relativeVelocity.dot(n)));
 
         //relativeVelocity.dot(tangent) should less than 0
         tangent = tangent.normalize().scale(-1);
 
-        RcrossN1 = r1.cross(tangent);
-        RcrossN2 = r2.cross(tangent);
+        var R1crossT = r1.cross(tangent);
+        var R2crossT = r2.cross(tangent);
 
         var j2 = -(1 + newRestituion) * relativeVelocity.dot(tangent) * newFriction;
-        j2 = j2 / (s1.mInvMass + s2.mInvMass + RcrossN1 * RcrossN1 * s1.mInertia + RcrossN2 * RcrossN2 * s2.mInertia);
+        j2 = j2 / (s1.mInvMass + s2.mInvMass + R1crossT * R1crossT * s1.mInertia + R2crossT * R2crossT * s2.mInertia);
 
         //friction should less than force in normal direction
         if (j2 > j) {
@@ -112,8 +104,8 @@ gEngine.Physics = (function () {
 
         s1.mVelocity = s1.mVelocity.subtract(impulse.scale(s1.mInvMass));
         s2.mVelocity = s2.mVelocity.add(impulse.scale(s2.mInvMass));
-        s1.mAngularVelocity -= RcrossN1 * j2 * s1.mInertia;
-        s2.mAngularVelocity += RcrossN2 * j2 * s2.mInertia;
+        s1.mAngularVelocity -= R1crossT * j2 * s1.mInertia;
+        s2.mAngularVelocity += R2crossT * j2 * s2.mInertia;
     };
 
     var drawCollisionInfo = function (collisionInfo, context) {
@@ -138,7 +130,7 @@ gEngine.Physics = (function () {
                             }
 
                             //draw collision info (a black line that shows normal)
-                            drawCollisionInfo(collisionInfo, gEngine.Core.mContext);
+                            //drawCollisionInfo(collisionInfo, gEngine.Core.mContext);
 
                             resolveCollision(gEngine.Core.mAllObjects[i], gEngine.Core.mAllObjects[j], collisionInfo);
                         }

@@ -63,19 +63,17 @@ gEngine.Physics = (function () {
         //impulse is in direction of normal ( from s1 to s2)
         var impulse = n.scale(j);
 
-        //impulse = F dt = m * △v
-        // △v = impulse / m
         s1.mVelocity = s1.mVelocity.subtract(impulse.scale(s1.mInvMass));
         s2.mVelocity = s2.mVelocity.add(impulse.scale(s2.mInvMass));
 
         var tangent = relativeVelocity.subtract(n.scale(relativeVelocity.dot(n)));
-        
+
         //relativeVelocity.dot(tangent) should less than 0
         tangent = tangent.normalize().scale(-1);
-        
+
         var j2 = -(1 + newRestituion) * relativeVelocity.dot(tangent) * newFriction;
         j2 = j2 / (s1.mInvMass + s2.mInvMass);
-        
+
         //friction should less than force in normal direction
         if (j2 > j) {
             j2 = j;
@@ -110,7 +108,7 @@ gEngine.Physics = (function () {
                             }
 
                             //draw collision info (a black line that shows normal)
-                            drawCollisionInfo(collisionInfo, gEngine.Core.mContext);
+                            // drawCollisionInfo(collisionInfo, gEngine.Core.mContext);
 
                             resolveCollision(gEngine.Core.mAllObjects[i], gEngine.Core.mAllObjects[j], collisionInfo);
                         }
