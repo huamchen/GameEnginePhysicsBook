@@ -24,24 +24,25 @@ function userControl(event) {
             gObjectNum = keycode - 48;
         }
     }
-    if (keycode === 38) {
-        //up arrow
+    if (keycode === 38) { //up arrow
         if (gObjectNum > 0) {
             gObjectNum--;
         }
     }
-    if (keycode === 40) {
-        // down arrow
+    if (keycode === 40) { // down arrow
         if (gObjectNum < gEngine.Core.mAllObjects.length - 1) {
             gObjectNum++;
         }
     }
-    if (keycode === 70) {
-        //f
-        var r1 = new Rectangle(new Vec2(Math.random() * width * 0.8, Math.random() * height * 0.8), Math.random() * 30 + 10, Math.random() * 30 + 10);
+    if (keycode === 70) { //f
+        var r1 = new Rectangle(new Vec2(Math.random() * width * 0.8, //X of center
+                Math.random() * height * 0.8), //Y of center
+                Math.random() * 30 + 10, //weight 
+                Math.random() * 30 + 10); //height
     }
-    if (keycode === 71) {
-        //g
-        var r1 = new Circle(new Vec2(Math.random() * width * 0.8, Math.random() * height * 0.8), Math.random() * 10 + 20);
+    if (keycode === 71) { //g
+        var r1 = new Circle(new Vec2(Math.random() * width * 0.8, //X of center
+                Math.random() * height * 0.8), //Y of center
+                Math.random() * 10 + 20); //radius
     }
 }
