@@ -89,9 +89,8 @@ RigidShape.prototype.update = function () {
         //s = v*t + 0.5*a*t^2
         this.move(this.mVelocity.scale(dt).add(this.mAcceleration.scale(dt * dt / 2)));
 
-        this.rotate(this.mAngularVelocity * dt + this.mAngularAcceleration * dt * dt / 2);
-
         this.mAngularVelocity += this.mAngularAcceleration * dt;
+        this.rotate(this.mAngularVelocity * dt + this.mAngularAcceleration * dt * dt / 2);        
     }
     var width = gEngine.Core.mWidth;
     var height = gEngine.Core.mHeight;
