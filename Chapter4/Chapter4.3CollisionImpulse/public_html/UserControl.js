@@ -40,7 +40,7 @@ function userControl(event) {
         gEngine.Core.mAllObjects[gObjectNum].move(new Vec2(0, -10));
     }
     if (keycode === 83) {
-        // S
+        //S
         gEngine.Core.mAllObjects[gObjectNum].move(new Vec2(0, +10));
     }
     if (keycode === 65) {
@@ -64,7 +64,7 @@ function userControl(event) {
         gEngine.Core.mAllObjects[gObjectNum].mVelocity.y -= 1;
     }
     if (keycode === 75) {
-        // k
+        //k
         gEngine.Core.mAllObjects[gObjectNum].mVelocity.y += 1;
     }
     if (keycode === 74) {
@@ -112,7 +112,7 @@ function userControl(event) {
         gEngine.Physics.mPositionalCorrectionFlag = !gEngine.Physics.mPositionalCorrectionFlag;
     }
     if (keycode === 188) {
-        //，
+        //,
         gEngine.Core.mMovement = !gEngine.Core.mMovement;
     }
     if (keycode === 70) {

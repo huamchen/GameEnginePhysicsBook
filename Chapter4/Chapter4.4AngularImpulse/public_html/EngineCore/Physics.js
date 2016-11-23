@@ -72,7 +72,9 @@ gEngine.Physics = (function () {
         // Calc impulse scalar
         // the formula of j can be found in http://www.myphysicslab.com/collision.html
         var j = -(1 + newRestituion) * rVelocityInNormal;
-        j = j / (s1.mInvMass + s2.mInvMass + R1crossN * R1crossN * s1.mInertia + R2crossN * R2crossN * s2.mInertia);
+        j = j / (s1.mInvMass + s2.mInvMass +
+                R1crossN * R1crossN * s1.mInertia +
+                R2crossN * R2crossN * s2.mInertia);
 
         //impulse is in direction of normal ( from s1 to s2)
         var impulse = n.scale(j);

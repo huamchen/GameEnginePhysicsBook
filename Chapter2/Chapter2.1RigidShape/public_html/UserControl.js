@@ -12,11 +12,9 @@ function userControl(event) {
     var keycode;
     var width = gEngine.Core.mWidth;
     var height = gEngine.Core.mHeight;
-    if (window.event) {
-        //alert('ie');
+    if (window.event) {// IE
         keycode = event.keyCode;
-    } else if (event.which) {
-        //alert('firefox ');
+    } else if (event.which) {// Netscape/Firefox/Opera  
         keycode = event.which;
     }
     if (keycode >= 48 && keycode <= 57) {
