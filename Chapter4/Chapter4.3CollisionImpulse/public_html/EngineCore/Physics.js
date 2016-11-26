@@ -12,7 +12,6 @@ gEngine.Physics = (function () {
 
     var mPositionalCorrectionFlag = true;
     var mRelaxationCount = 15;                  // number of relaxation iteration
-    var mRelaxationOffset = 1 / mRelaxationCount; // porportion to apply when scaling friction
     var mPosCorrectionRate = 0.8;               // percentage of separation to project objects
 
     var positionalCorrection = function (s1, s2, collisionInfo) {
@@ -56,12 +55,12 @@ gEngine.Physics = (function () {
         var newFriction = Math.min(s1.mFriction, s2.mFriction);
 
         // Calc impulse scalar
-        // the formula of j can be found in http://www.myphysicslab.com/collision.html
-        var j = -(1 + newRestituion) * rVelocityInNormal;
-        j = j / (s1.mInvMass + s2.mInvMass);
+        // the formula of jN can be found in http://www.myphysicslab.com/collision.html
+        var jN = -(1 + newRestituion) * rVelocityInNormal;
+        jN = jN / (s1.mInvMass + s2.mInvMass);
 
         //impulse is in direction of normal ( from s1 to s2)
-        var impulse = n.scale(j);
+        var impulse = n.scale(jN);
         // impulse = F dt = m * △v
         // △v = impulse / m
         s1.mVelocity = s1.mVelocity.subtract(impulse.scale(s1.mInvMass));
@@ -72,16 +71,16 @@ gEngine.Physics = (function () {
         // relativeVelocity.dot(tangent) should less than 0
         tangent = tangent.normalize().scale(-1);
 
-        var j2 = -(1 + newRestituion) * relativeVelocity.dot(tangent) * newFriction;
-        j2 = j2 / (s1.mInvMass + s2.mInvMass);
+        var jT = -(1 + newRestituion) * relativeVelocity.dot(tangent) * newFriction;
+        jT = jT / (s1.mInvMass + s2.mInvMass);
 
         // friction should less than force in normal direction
-        if (j2 > j) {
-            j2 = j;
+        if (jT > jN) {
+            jT = jN;
         }
 
         //impulse is from s1 to s2 (in opposite direction of velocity)
-        impulse = tangent.scale(j2);
+        impulse = tangent.scale(jT);
 
         s1.mVelocity = s1.mVelocity.subtract(impulse.scale(s1.mInvMass));
         s2.mVelocity = s2.mVelocity.add(impulse.scale(s2.mInvMass));

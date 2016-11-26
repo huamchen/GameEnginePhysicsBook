@@ -12,7 +12,6 @@ gEngine.Physics = (function () {
 
     var mPositionalCorrectionFlag = true;
     var mRelaxationCount = 15;                  // number of relaxation iteration
-    var mRelaxationOffset = 1 / mRelaxationCount; // proportion to apply when scaling friction
     var mPosCorrectionRate = 0.8;               // percentage of separation to project objects
 
     var positionalCorrection = function (s1, s2, collisionInfo) {
